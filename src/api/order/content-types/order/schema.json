@@ -4,7 +4,8 @@
   "info": {
     "singularName": "order",
     "pluralName": "orders",
-    "displayName": "order"
+    "displayName": "order",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -26,14 +27,15 @@
     "courierCost": {
       "type": "integer"
     },
-    "status": {
+    "statusOrder": {
       "type": "enumeration",
       "enum": [
         "Waiting Payment",
         "In-Process",
         "On-Delivery",
         "Complete",
-        "Cancel"
+        "Cancel",
+        "Failed"
       ]
     }
   }

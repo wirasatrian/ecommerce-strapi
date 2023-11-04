@@ -677,6 +677,45 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAddressAddress extends Schema.CollectionType {
+  collectionName: 'addresses';
+  info: {
+    singularName: 'address';
+    pluralName: 'addresses';
+    displayName: 'address';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    address: Attribute.String;
+    phone: Attribute.String;
+    prov_id: Attribute.String;
+    city_id: Attribute.String;
+    subdistrict_id: Attribute.String;
+    pos_code: Attribute.String;
+    user_id: Attribute.BigInteger;
+    is_default: Attribute.Boolean & Attribute.DefaultTo<false>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::address.address',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::address.address',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Schema.CollectionType {
   collectionName: 'categories';
   info: {
@@ -718,6 +757,7 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     singularName: 'order';
     pluralName: 'orders';
     displayName: 'order';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -728,8 +768,15 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     deliveryAddress: Attribute.String;
     courierName: Attribute.String;
     courierCost: Attribute.Integer;
-    status: Attribute.Enumeration<
-      ['Waiting Payment', 'In-Process', 'On-Delivery', 'Complete', 'Cancel']
+    statusOrder: Attribute.Enumeration<
+      [
+        'Waiting Payment',
+        'In-Process',
+        'On-Delivery',
+        'Complete',
+        'Cancel',
+        'Failed'
+      ]
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -836,6 +883,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::address.address': ApiAddressAddress;
       'api::category.category': ApiCategoryCategory;
       'api::order.order': ApiOrderOrder;
       'api::payment-callback.payment-callback': ApiPaymentCallbackPaymentCallback;
